@@ -61,7 +61,7 @@ Buttons
 }
 
 
-.login-btn, .signup-btn,.signpanel-btn, .number-btn,.cashout-btn,.qr-btn,.addbankaccount-btn{
+.login-btn, .signup-btn, .number-btn,.cashout-btn,.qr-btn,.addbankaccount-btn{
  vertical-align: middle;
  font-size:3.5vw;
  display:inline-block;
@@ -80,6 +80,56 @@ Buttons
  text-align:center;
  width: 20vw;
  box-shadow: 0 1px 4px rgba(0, 0, 0, .4);
+}
+.cuslogin, .merlogin{
+   width: 35%;
+   border-radius: 30px;
+
+   vertical-align: middle;
+   font-size:3.5vw;
+   display:inline-block;
+   line-height: normal;
+   font-weight: 500;
+
+
+   text-transform: uppercase;
+   text-align: center;
+   padding: 3vw;
+   margin-top:1vw;
+   border: 1px solid;
+   border-width: 1;
+   outline: none;
+   border-color: white;
+
+   text-align:center;
+
+   box-shadow: 0 1px 4px rgba(0, 0, 0, .4);
+
+
+}
+.cuslogin{
+  background-color:white;
+
+  color:#ffbf80;
+}
+.signpanel-btn{
+  vertical-align: middle;
+
+  display:inline-block;
+  line-height: normal;
+  font-weight: 500;
+  color:white!important;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 3vw;
+  bottom:0;
+  height:100%;
+  border-width: 0;
+  outline: none;
+  border-color: white;
+  text-align:center;
+  width: 100%;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .4);
 }
 
 input:focus,
@@ -244,6 +294,7 @@ Divs/ Panels
  float: left;
  padding: 3vw;
  font-weight: bolder;
+
 }
 
 .info-modal .modal-info, .info-modal-info{
@@ -266,6 +317,7 @@ Divs/ Panels
  color:white;
  text-transform: uppercase;
  text-align: center;
+
 }
 
 .verification-form,.code-form, .mmcard, .bank_account{
@@ -318,6 +370,7 @@ Divs/ Panels
  color:white;
  text-transform: uppercase;
  text-align: center;
+
 }
 
 .input-panel{
@@ -325,12 +378,24 @@ Divs/ Panels
  display: block;
  font-size: 0;
  margin-bottom: 4vw;
+
+
+}
+
+.vertical-align-wrapsign{
+  position: absolute;
+  width:100%;
+  position: fixed;
+  bottom: 0;
+  height:8%;
+  width: 100%;
+  display: table;
 }
 .vertical-align-wrap {
  position: absolute;
  width:100%;
  position: fixed;
- bottom: 0;
+ bottom: 8%;
  height:8%;
  width: 100%;
  display: table;
@@ -352,6 +417,10 @@ Divs/ Panels
 .signup-form
 {
  display: none;
+
+}
+#signupcontainer{
+  overflow: scroll;
 }
 .type-bank, .type-mobile{
   width: 30%;
@@ -493,6 +562,9 @@ select{
  border-top-right-radius: 2vw;
 
 
+}
+#signupgender,#idtype,#signupdob{
+  background-color: white;
 }
 /*
 ----------------------------

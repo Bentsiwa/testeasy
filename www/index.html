@@ -3,10 +3,9 @@
 <html lang="en">
 	<head>
 
-		<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+	  <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 		<title>EasySave</title>
 		<meta name="format-detection" content="telephone=no">
 		<meta name="msapplication-tap-highlight" content="no">
@@ -23,16 +22,17 @@
 			<div class="login-panel">
 				<div class="container">
 					<div class="panel-hide">
-						<i class="fa fa-chevron-down" aria-hidden="true"></i>
+						<i id="showsignupbtn" class="fa fa-chevron-down" aria-hidden="true"></i>
 					</div>
 					<div class="input-panel">
 						<input type="text" id="homeUsername" placeholder="USERNAME" required>
 						<input type="password" id="homePassword" placeholder="PASSWORD" required>
 					</div>
 					<div class="btn-panel">
-						<span onclick="loginCustomer()">Customer Login</span><br>
-						<span onclick="loginMerchant()">Merchant Login</span><br>
-						<span class="signpanel-btn btn">Sign Up</span>
+						<span class="merlogin" onclick="loginMerchant()">Merchant Login</span>
+						<span class="cuslogin" onclick="loginCustomer()">Customer Login</span>
+
+
 						<!--					<span class="text">Forgot Password?</span>-->
 					</div>
 				</div>
@@ -57,7 +57,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="container">
+				<div id="signupcontainer" class="container">
 					<div class="signup-form">
 
 						<!-- <span class="confirmationbtn uk-text-danger uk-text-capitalize fa fa-exclamation">The specified passwords do not match</span> -->
@@ -120,15 +120,19 @@
 			</div>
 
 
+			<div class="vertical-align-wrapsign">
+				<span class="signpanel-btn btn">Sign Up</span>
 
+			</div>
 			<div class="vertical-align-wrap">
+
 				<div class="login-pop btn" >Login</div>
 			</div>
 		</div>
 		<div class="info-modal-div">
 			<div class="info-modal">
 				<div class="modal-header">
-					<span class="ti-close"></span>
+					<span  class="ti-close"></span>
 					<span class="info-modal-info"></span>
 					<div class="line"></div>
 				</div>

@@ -31,6 +31,7 @@ $(".login-pop").click(function(){
     $(".fa").removeClass("fa-chevron-up");
     $(".fa").addClass("fa-chevron-down");
     $(".uk-form").hide();
+    $(".vertical-align-wrapsign").hide();
 });
 
 $(".panel-hide").click(function(){
@@ -48,6 +49,8 @@ $(".signpanel-btn").click(function(){
     $(".sign-fa").removeClass("fa-chevron-up");
     $(".sign-fa").removeClass("fa-chevron-left");
     $(".sign-fa").addClass("fa-chevron-down");
+    $(".vertical-align-wrap").hide();
+    $(".vertical-align-wrapsign").hide();
 });
 
 $(".signup-panel-hide").click(function(){
@@ -62,6 +65,8 @@ $(".signup-panel-hide").click(function(){
     $(".sign-fa").removeClass("fa-chevron-left");
     $(".sign-fa").addClass("fa-chevron-down");
     $(".input").val("");
+    $(".vertical-align-wrap").show();
+    $(".vertical-align-wrapsign").show();
 
 });
 
@@ -110,9 +115,9 @@ $(".confirm").click(function(){
       return false;
     }else{
       getUserWithPhoneNumber();
-      
+
     }
- 
+
 
 });
 
@@ -121,7 +126,9 @@ $(".confirm-code ").click(function(){
 
 });
 
+
 $(".signup-btn").click(function(){
+
   if(validateForm()==false){
 
   }else{
@@ -149,7 +156,7 @@ $(".signup-btn").click(function(){
 $(".addaccount-form").click(function(){
   var smscode=$('#smscode').val();
 
- 
+
 
   if(smscode==code){
 
@@ -275,6 +282,11 @@ $(".ti-close").click(function(){
     $(".info-cover").fadeOut();
     $(".info-modal-div").fadeOut();
     $(".info-modal").fadeOut();
+
+});
+
+$("#showsignupbtn").click(function(){
+    $(".vertical-align-wrapsign").show();
 });
 
 $(".ti-arrow-left").click(function(){
@@ -407,7 +419,7 @@ function sendsms(thecode, phonenumber){
 
 
   var theUrl="http://easysavegh.com/databasecommand.php?cmd=13&smscode="+thecode+"&phonenumber="+phonenumber;
- 
+
   $.ajax(theUrl,
         {
           async:true,
@@ -515,16 +527,16 @@ function getUserWithPhoneNumberComplete(xhr,status){
         console.log(code);
 
         //send code via sms for confirmation
-     
+
         sendsms(code , phonenumber);
-        
+
         //code form
         $(".code-form").fadeIn(600);
         $(".verification-form").hide();
         $(".sign-fa").removeClass("fa-chevron-left");
         $(".sign-fa").addClass("fa-close");
-        
-        
+
+
       }else{
           UIkit.modal.alert('<p class="uk-modal-body">'+obj.message+'</p>');
 
@@ -665,10 +677,10 @@ function validateForm(){
 
 }
 function signUp(){
-  
-    
+
+
      if (($('#accountnumber').val()==null && $('#mmnumber').val()==null)|| ($('#accountnumber').val()=="" && $('#mmnumber').val()=="")||($('#accountnumber').val()==null && $('#mmnumber').val()=="")||$('#accountnumber').val()=="" && $('#mmnumber').val()==null){
-                 
+
               $(".info-modal-div").hide();
               $(".code-form").fadeIn(600);
               $(".sign-fa").removeClass("fa-chevron-left");
