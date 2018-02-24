@@ -417,9 +417,12 @@ Divs/ Panels
 .signup-form
 {
  display: none;
-
+ height:80%;
+ overflow: scroll;
 }
+
 #signupcontainer{
+  height:100%;
   overflow: scroll;
 }
 .type-bank, .type-mobile{
