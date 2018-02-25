@@ -19,7 +19,7 @@ include_once("adb.php");
 
       $oldbalance=getBalance($id);
       $newbalance = $oldbalance - $amount;
-			$strQuery = "update easysave_account set balance='$newbalance' where userid='$id' ";
+			$strQuery = "update easysave_account set balance='$newbalance' where user_id='$id' ";
 
       return $this->query($strQuery);
 		}
@@ -34,7 +34,7 @@ include_once("adb.php");
 
       $oldbalance=getBalance($id);
       $newbalance = $oldbalance + $amount;
-			$strQuery = "update easysave_account set balance='$newbalance' where userid='$id' ";
+			$strQuery = "update easysave_account set balance='$newbalance' where user_id='$id' ";
 
 			return $this->query($strQuery);
 		}
@@ -43,7 +43,7 @@ include_once("adb.php");
     Fetch details of the users easy save account as a while
      */
 		function getAccount($id){
-			$strQuery="select * from easysave_account where userid='$id'";
+			$strQuery="select * from easysave_account where user_id='$id'";
 			return $this->query($strQuery);
 		}
 
@@ -53,7 +53,7 @@ include_once("adb.php");
 		*/
 		function getBalance($userid){
 			$strQuery="Select balance from easysave_account where user_id = '$userid'";
-			
+
 			return $this->query($strQuery);
 		}
 
@@ -78,6 +78,13 @@ include_once("adb.php");
 		function getBankAccountDetails($id){
 			$strQuery="select * from user where user_id='$id'";
 			return $this->query($strQuery);
+		}
+
+		function addeasysaveaccount($id){
+			$strQuery="insert into easysave_account set
+							user_id='$id',
+							balance=0";
+							return $this->query($strQuery);
 		}
 
 	}

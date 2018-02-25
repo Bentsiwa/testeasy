@@ -187,7 +187,7 @@ ini_set('display_errors', 'on');
 
     }
     else{
-        echo '{"result":0,"message":"Transaction Created Successfully"}';
+        echo '{"result":0,"message":"Transaction created Successfully"}';
     }
 
 
@@ -400,17 +400,28 @@ ini_set('display_errors', 'on');
 			$idnumber=$_REQUEST['idnumber'];
 
 
-
+			include('easysave.php');
 			include('users.php');
 			$obj=new users();
 			$row=$obj->addNewUser($firstname,$lastname,$email,$password,$phonenumber,$gender, $dob, $account_status, $type,$accountname,$accountnumber,$accountbranch, $bankname,$mmnumber, $network, $idtype, $idnumber, $mmname);
 
 			if($row==true){
-			echo '{"result":1,"message":"Sign up successful"}';
+				$row=$obj->getID($email, $password);
+				$row=$row->fetch();
+				if($row==false){
+					echo '{"result":0,"message":"Failed to sign up"}';
+				}else{
+					$obj=new easysave();
+					$row=$obj->addeasysaveaccount($row);
+					if($row==true){
+						echo '{"result":1,"message":"Sign up successful"}';
+					}
 			}
+		}
+
 
 			else{
-			echo '{"result":0,"message":"Failed to sign up.up"}';
+			echo '{"result":0,"message":"Failed to sign up"}';
 			}
 	}
 
@@ -660,7 +671,7 @@ ini_set('display_errors', 'on');
 		try {
 			// Send a quick message
 			$messageResponse = $messagingApi->sendQuickMessage("EasySave",$phonenumber, $smscode." is your verification code for EasySave.");
-			
+
 
 			if ($messageResponse instanceof MessageResponse) {
 					echo '{"result":1,"message":"'. $messageResponse->getStatus().'"}';

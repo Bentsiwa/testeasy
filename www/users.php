@@ -7,7 +7,7 @@ include_once("adb.php");
 		/**
 		* Creates a new constructor of the class
 		*/
-	
+
 
     /**
      * login a user if the are a merchant attempting to log in
@@ -87,6 +87,10 @@ include_once("adb.php");
 			return $this->query($strQuery);
 		}
 
+
+
+
+
 		function deleteUser($userid){
 			$strQuery="update user set status='inactive' where userid='$userid' ";
 			return $this->query($strQuery);
@@ -114,8 +118,8 @@ include_once("adb.php");
 		* @param user's name
 		* @return user's Id
 		*/
-		function getID($userName){
-			$strQuery="Select ID from user where username = '$userName'";
+		function getID($email, $password){
+			$strQuery="Select user_id from user where email = '$email' and password = '$password'";
 			return $this->query($strQuery);
 		}
 
