@@ -1220,9 +1220,7 @@ function addAccountComplete(xhr, status){
  * placeholder function to point to let you know that the actual function exists under the jQuery function
  * @return {[null]} [null]
  */
-function barcode(){
-  alert("Refer to barcode scanner eventListener under jQuery functions.");
-}
+
 
 
 
