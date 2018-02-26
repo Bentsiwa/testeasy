@@ -372,14 +372,15 @@ function selected_account(checkedbox){
              });
 
 
-             UIkit.modal.alert('<p class="uk-modal-body">'+'We got a barcode\n' +
+             alert('<p class="uk-modal-body">'+'We got a barcode\n' +
    							 'Result: ' + result.text + '\n' +
    							 'Format: ' + result.format + '\n' +
    							 'Cancelled: ' + result.cancelled+'</p>');
+
                getBalance();
 		 },
 		 function (error) {
-				  UIkit.modal.alert('<p class="uk-modal-body">'+'Scanning failed.'+'</p>');
+				  alert('<p class="uk-modal-body">'+'Scanning failed.'+'</p>');
 		 },
 		 {
 				 "preferFrontCamera" : true, // iOS and Android
@@ -1053,7 +1054,7 @@ function getBalance(){
 
 
   var theUrl="http://easysavegh.com/databasecommand.php?cmd=7&id="+id;
-prompt('url', theUrl);
+
   $.ajax(theUrl,
         {
           async:true,
