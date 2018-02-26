@@ -378,7 +378,7 @@ function selected_account(checkedbox){
    						// 	 'Format: ' + result.format + '\n' +
    						// 	 'Cancelled: ' + result.cancelled);
 
-               getBalance();
+               window.location="client-dashboard.html";
 		 },
 		 function (error) {
 				  alert('Scanning failed.');
@@ -737,7 +737,7 @@ function signUp(){
                 +phonenumber+"&account_status="+status+"&type="+type+"&accountname="+accountname+"&accountnumber="+accountnumber
                 +"&accountbranch="+accountbranch+"&bankname="+bankname+"&mmnumber="+mmnumber+"&network="+network+"&idtype="+idtype
                 +"&idnumber="+idnumber+"&mmname="+mmname;
-prompt('url',theUrl);
+
       $.ajax(theUrl,
             {
               async:true,
