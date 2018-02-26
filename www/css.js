@@ -372,15 +372,15 @@ function selected_account(checkedbox){
              });
 
 
-             alert('<p class="uk-modal-body">'+'We got a barcode\n' +
+             alert('We got a barcode\n' +
    							 'Result: ' + result.text + '\n' +
    							 'Format: ' + result.format + '\n' +
-   							 'Cancelled: ' + result.cancelled+'</p>');
+   							 'Cancelled: ' + result.cancelled);
 
                getBalance();
 		 },
 		 function (error) {
-				  alert('<p class="uk-modal-body">'+'Scanning failed.'+'</p>');
+				  alert('Scanning failed.');
 		 },
 		 {
 				 "preferFrontCamera" : true, // iOS and Android
