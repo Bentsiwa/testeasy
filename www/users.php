@@ -120,6 +120,7 @@ include_once("adb.php");
 		*/
 		function getID($email, $password){
 			$strQuery="Select user_id from user where email = '$email' and password = '$password'";
+			
 			return $this->query($strQuery);
 		}
 

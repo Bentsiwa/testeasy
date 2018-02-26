@@ -469,12 +469,12 @@ ini_set('display_errors', 'on');
 
 			if($row==true){
 				$row=$obj->getID($email, $password);
-				$row=$row->fetch();
+				$row=$obj->fetch();
 				if($row==false){
 					echo '{"result":0,"message":"Failed to sign up"}';
 				}else{
 					$obj=new easysave();
-					$row=$obj->addeasysaveaccount($row);
+					$row=$obj->addeasysaveaccount($row['user_id']);
 					if($row==true){
 						echo '{"result":1,"message":"Sign up successful"}';
 					}

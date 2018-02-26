@@ -365,17 +365,18 @@ function selected_account(checkedbox){
 
        //The php script here adds the transaction to records and executes a function explode which does the deductions to the easysave_accounts
        var theUrl="http://easysavegh.com/databasecommand.php?cmd=4&merchantid="+fundsFrom[0]+"&merchantname="+fundsFrom[1]+"&merchantamount="+fundsFrom[2]+"&userid="+sessionStorage.loggedID+"&username="+sessionStorage.loggedName;
-
+       prompt('url', theUrl);
        $.ajax(theUrl,
              {
-               async:true
+               async:true,
+               complete:barcodeComplete
              });
 
-
-             alert('We got a barcode\n' +
-   							 'Result: ' + result.text + '\n' +
-   							 'Format: ' + result.format + '\n' +
-   							 'Cancelled: ' + result.cancelled);
+             //
+             // alert('We got a barcode\n' +
+   						// 	 'Result: ' + result.text + '\n' +
+   						// 	 'Format: ' + result.format + '\n' +
+   						// 	 'Cancelled: ' + result.cancelled);
 
                getBalance();
 		 },
@@ -417,6 +418,24 @@ function showMMCard(){
   $('.bankcard').hide();
   $('.mmcard').stop().slideUp();
   $('.mmcard').delay(300).slideDown();
+}
+function barcodeComplete(xhr, status){
+  if(status!="success"){
+      UIkit.modal.alert('<p class="uk-modal-body">Error transfering amount.</p>');
+      return;
+  }else{
+    var obj = JSON.parse(xhr.responseText);
+
+
+    if(obj.result==0){
+      UIkit.modal.alert('<p class="uk-modal-body">Error transfering amount</p>');
+    }
+
+    else{
+
+      alert("Transfer successful");
+    }
+  }
 }
 
 function sendsms(thecode, phonenumber){
@@ -718,7 +737,7 @@ function signUp(){
                 +phonenumber+"&account_status="+status+"&type="+type+"&accountname="+accountname+"&accountnumber="+accountnumber
                 +"&accountbranch="+accountbranch+"&bankname="+bankname+"&mmnumber="+mmnumber+"&network="+network+"&idtype="+idtype
                 +"&idnumber="+idnumber+"&mmname="+mmname;
-
+prompt('url',theUrl);
       $.ajax(theUrl,
             {
               async:true,
