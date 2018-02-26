@@ -1054,7 +1054,7 @@ function getBalance(){
 
 
   var theUrl="http://easysavegh.com/databasecommand.php?cmd=7&id="+id;
-
+prompt('url',theUrl);
   $.ajax(theUrl,
         {
           async:true,
