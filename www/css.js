@@ -365,7 +365,7 @@ function selected_account(checkedbox){
 
        //The php script here adds the transaction to records and executes a function explode which does the deductions to the easysave_accounts
        var theUrl="http://easysavegh.com/databasecommand.php?cmd=4&merchantid="+fundsFrom[0]+"&merchantname="+fundsFrom[1]+"&merchantamount="+fundsFrom[2]+"&userid="+sessionStorage.loggedID+"&username="+sessionStorage.loggedName;
-       alert(theUrl);
+
        $.ajax(theUrl,
              {
                async:true
@@ -1051,8 +1051,9 @@ function getBalance(){
 
   var id=sessionStorage.loggedID;
 
-  var theUrl="http://easysavegh.com/databasecommand.php?cmd=7&id="+id;
 
+  var theUrl="http://easysavegh.com/databasecommand.php?cmd=7&id="+id;
+prompt('url', theUrl);
   $.ajax(theUrl,
         {
           async:true,
