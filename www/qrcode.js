@@ -10,9 +10,7 @@ function generate_qrcode(){
   var _merchantID = sessionStorage.loggedID;
   var _merchantName = sessionStorage.loggedName;
 
-  alert(_amount);
-  alert(_merchantID);
-  alert(_merchantName);
+  
 
   $.ajax({
     type: 'post',

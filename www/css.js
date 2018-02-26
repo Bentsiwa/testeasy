@@ -483,6 +483,7 @@ function loginMerchant(){
   var password = $('#homePassword').val();
   console.log(username);
   console.log(password);
+  iqwerty.toast.Toast('Loggin In...');
 
   var theUrl="http://easysavegh.com/databasecommand.php?cmd=1&email="+username+"&password="+password;
   $.ajax(theUrl,
@@ -511,7 +512,7 @@ function loginMerchantComplete(xhr, status){
       sessionStorage.loggedID = obj.user_id;
       sessionStorage.loggedName = obj.firstname+" "+obj.lastname;
 
-      iqwerty.toast.Toast('Loggin In...');
+
       sessionStorage.loggedAccountType = "bank";
       window.location="dashboard.html";
 
@@ -585,7 +586,7 @@ function getUserWithPhoneNumberComplete(xhr,status){
 function loginCustomer(){
   var username = $('#homeUsername').val();
   var password = $('#homePassword').val();
-
+  iqwerty.toast.Toast('Loggin In...');
   var theUrl="http://easysavegh.com/databasecommand.php?cmd=2&email="+username+"&password="+password;
   $.ajax(theUrl,
         {
@@ -613,7 +614,7 @@ function loginCustomerComplete(xhr, status){
       sessionStorage.loggedName = obj.firstname+" "+obj.lastname;
       sessionStorage.cashoutamt=obj.cashout_amount;
 
-      iqwerty.toast.Toast('Loggin In...');
+
       sessionStorage.loggedAccountType = "bank";
       window.location="client-dashboard.html";
 
@@ -699,7 +700,7 @@ function validateForm(){
 }
 function signUp(){
 
-
+    iqwerty.toast.Toast('Sighin In...');
      if (($('#accountnumber').val()==null && $('#mmnumber').val()==null)|| ($('#accountnumber').val()=="" && $('#mmnumber').val()=="")||($('#accountnumber').val()==null && $('#mmnumber').val()=="")||$('#accountnumber').val()=="" && $('#mmnumber').val()==null){
 
               $(".info-modal-div").hide();
