@@ -342,11 +342,13 @@ Divs/ Panels
  margin-left: auto;
 
  padding-bottom: 15px;
+
 }
 @media (min-width: 768px) {
  .container {
   width: 750px;
  }
+
 }
 @media (min-width: 992px) {
  .container {
@@ -418,15 +420,18 @@ Divs/ Panels
 
 .signup-form
 {
- display: none;
- height:80%;
- overflow: scroll;
+   display: none;
+   overflow:scroll;
+
 }
 
 #signupcontainer{
-  height:100%;
-  overflow: scroll;
+  overflow:scroll;
+
+
 }
+
+
 .type-bank, .type-mobile{
   width: 30%;
   height: 20%;

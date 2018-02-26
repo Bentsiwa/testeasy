@@ -15,10 +15,11 @@ include_once("adb.php");
      * @param  [int] $amount [passed in amount - all params under this function are fetched from the QR code. Perform fattening to execute easysave to easy save transaction]
      * @return [type]         [return query detail]
      */
-		function easysaveAccountDeduct($id,$amount){
+		function easysaveAccountDeduct($id,$amount, $balance){
+			$oldbalance=$balance;
 
-      $oldbalance=getBalance($id);
       $newbalance = $oldbalance - $amount;
+
 			$strQuery = "update easysave_account set balance='$newbalance' where user_id='$id' ";
 
       return $this->query($strQuery);
@@ -30,10 +31,12 @@ include_once("adb.php");
  * @param  [int] $amount [passed in amount - all params under this function are fetched from the QR code. Perform fattening to execute easysave to easy save transaction]
  * @return [type]         [return query detail]
  */
-    function easysaveAccountCredit($id,$amount){
+    function easysaveAccountCredit($id,$amount, $balance){
 
-      $oldbalance=getBalance($id);
+    	$oldbalance=$balance;
+
       $newbalance = $oldbalance + $amount;
+
 			$strQuery = "update easysave_account set balance='$newbalance' where user_id='$id' ";
 
 			return $this->query($strQuery);
@@ -44,6 +47,7 @@ include_once("adb.php");
      */
 		function getAccount($id){
 			$strQuery="select * from easysave_account where user_id='$id'";
+
 			return $this->query($strQuery);
 		}
 
@@ -52,8 +56,9 @@ include_once("adb.php");
 		* @param userid utilize the users ID to find their easy save account balance
 		*/
 		function getBalance($userid){
-			$strQuery="Select balance from easysave_account where user_id = '$userid'";
 
+			$strQuery="select balance from easysave_account where user_id = '$userid'";
+			
 			return $this->query($strQuery);
 		}
 
@@ -84,7 +89,7 @@ include_once("adb.php");
 			$strQuery="insert into easysave_account set
 							user_id='$id',
 							balance=0";
-							return $this->query($strQuery);
+			return $this->query($strQuery);
 		}
 
 	}

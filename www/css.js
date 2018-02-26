@@ -362,8 +362,9 @@ function selected_account(checkedbox){
        //split items separated by : once the QR code is caught.
        var fundsFrom = result.text.split(":");
 
+
        //The php script here adds the transaction to records and executes a function explode which does the deductions to the easysave_accounts
-       var theUrl="http://easysavegh.com/databasecommand.php?cmd=4&merchantid="+fundsFrom[0]+"&merchantname="+fundsFrom[0]+"&merchantamount="+fundsFrom[3]+"&userid="+sessionStorage.loggedID+"&username="+sessionStorage.loggedName;
+       var theUrl="http://easysavegh.com/databasecommand.php?cmd=4&merchantid="+fundsFrom[0]+"&merchantname="+fundsFrom[1]+"&merchantamount="+fundsFrom[2]+"&userid="+sessionStorage.loggedID+"&username="+sessionStorage.loggedName;
        alert(theUrl);
        $.ajax(theUrl,
              {
