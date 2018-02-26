@@ -372,13 +372,14 @@ function selected_account(checkedbox){
              });
 
 
-				 alert("We got a barcode\n" +
-							 "Result: " + result.text + "\n" +
-							 "Format: " + result.format + "\n" +
-							 "Cancelled: " + result.cancelled);
+             UIkit.modal.alert('<p class="uk-modal-body">'+'We got a barcode\n' +
+   							 'Result: ' + result.text + '\n' +
+   							 'Format: ' + result.format + '\n' +
+   							 'Cancelled: ' + result.cancelled+'</p>');
+               getBalance();
 		 },
 		 function (error) {
-				 alert("Scanning failed: " + error);
+				  UIkit.modal.alert('<p class="uk-modal-body">'+'Scanning failed.'+'</p>');
 		 },
 		 {
 				 "preferFrontCamera" : true, // iOS and Android
@@ -564,8 +565,6 @@ function getUserWithPhoneNumberComplete(xhr,status){
 function loginCustomer(){
   var username = $('#homeUsername').val();
   var password = $('#homePassword').val();
-  console.log(username);
-  console.log(password);
 
   var theUrl="http://easysavegh.com/databasecommand.php?cmd=2&email="+username+"&password="+password;
   $.ajax(theUrl,
