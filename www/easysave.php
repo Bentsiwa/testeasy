@@ -58,7 +58,7 @@ include_once("adb.php");
 		function getBalance($userid){
 
 			$strQuery="select balance from easysave_account where user_id = '$userid'";
-			
+
 			return $this->query($strQuery);
 		}
 
@@ -88,7 +88,7 @@ include_once("adb.php");
 		function addeasysaveaccount($id){
 			$strQuery="insert into easysave_account set
 							user_id='$id',
-							balance=0";
+							balance=0.00";
 			return $this->query($strQuery);
 		}
 

@@ -365,7 +365,7 @@ function selected_account(checkedbox){
 
        //The php script here adds the transaction to records and executes a function explode which does the deductions to the easysave_accounts
        var theUrl="http://easysavegh.com/databasecommand.php?cmd=4&merchantid="+fundsFrom[0]+"&merchantname="+fundsFrom[1]+"&merchantamount="+fundsFrom[2]+"&userid="+sessionStorage.loggedID+"&username="+sessionStorage.loggedName;
-       prompt('url', theUrl);
+
        $.ajax(theUrl,
              {
                async:true,
@@ -378,7 +378,7 @@ function selected_account(checkedbox){
    						// 	 'Format: ' + result.format + '\n' +
    						// 	 'Cancelled: ' + result.cancelled);
 
-               window.location="client-dashboard.html";
+              getBalance();
 		 },
 		 function (error) {
 				  alert('Scanning failed.');
@@ -481,8 +481,7 @@ function sendsmsComplete(xhr, status){
 function loginMerchant(){
   var username = $('#homeUsername').val();
   var password = $('#homePassword').val();
-  console.log(username);
-  console.log(password);
+
   iqwerty.toast.Toast('Loggin In...');
 
   var theUrl="http://easysavegh.com/databasecommand.php?cmd=1&email="+username+"&password="+password;
@@ -625,9 +624,7 @@ function loginCustomerComplete(xhr, status){
 
 function validateForm(){
     var emailfilter = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
-  //  var pnfilter = ^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$;
     var idnumberfilter=/[0-9]/;
-    // var pnfilter=^([0-9]{2,3}[]*)?[0-9]{4}[]*[0-9]{4}$;
     var passwordfilter=/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
 
     var email = $('#signupemail').val();
@@ -768,7 +765,7 @@ function signUpComplete(xhr, status){
 
     }
     else{
-      iqwerty.toast.Toast('Signing In...');
+
       $(".signup-panel").hide();
 
       $(".info-modal-div").hide();
@@ -1074,7 +1071,7 @@ function getBalance(){
 
 
   var theUrl="http://easysavegh.com/databasecommand.php?cmd=7&id="+id;
-prompt('url',theUrl);
+
   $.ajax(theUrl,
         {
           async:true,
