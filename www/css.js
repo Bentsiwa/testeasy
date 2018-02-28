@@ -1,26 +1,30 @@
-sessionStorage.logoutCount= 0;
-sessionStorage.currentPage=".dashboard";
+localStorage.logoutCount= 0;
+localStorage.currentPage=".dashboard";
 //CSS Animations
 //Index Page
+
+
 $(".ti-power-off").click(function(){
     var options = {
         settings: {
             duration: 1000
         }
     };
-    if(sessionStorage.logoutCount== 1){
+    if(localStorage.logoutCount== 1){
         iqwerty.toast.Toast('Loggin Out...');
-        sessionStorage.clear();
 
-            window.location="index.html";
+        localStorage.clear();
+
+
+          window.location="index.html";
 
     }
-    if(sessionStorage.logoutCount== 0){
-        sessionStorage.logoutCount= 1;
+    if(localStorage.logoutCount== 0){
+        localStorage.logoutCount= 1;
         iqwerty.toast.Toast('Press Again to Logout',options);
     }
     setTimeout(function() {
-        sessionStorage.logoutCount= 0;
+        localStorage.logoutCount= 0;
     }, 10000);
 });
 
@@ -219,7 +223,7 @@ $(".ti-share").click(function(){
     $(".info-modal-info").html("AUTOMATIC CASHOUT");
     $(".info-modal-content").html('<span class="modal-info">We can automate cash outs to your primary account.'
                                   +' Please let us know at what available balance this should occur. </span>'
-                                  +'<input type="number" id="cashout" placeholder="GHS '+sessionStorage.cashoutamt+'">'
+                                  +'<input type="number" id="cashout" placeholder="GHS '+localStorage.cashoutamt+'">'
                                   +'<div onClick="updateCashout()" class="cashout-btn btn" >Cashout</div>');
     $(".info-cover").fadeIn();
     $(".info-modal-div").fadeIn();
@@ -242,14 +246,14 @@ $(".ti-home").click(function(){
     $(".ti-wallet").removeClass("active");
     $(".ti-export").removeClass("active");
     $(".ti-home").addClass("active");
-    sessionStorage.currentPage=".dashboard";
+    localStorage.currentPage=".dashboard";
 });
 
 
 $(".ti-settings").click(function(){
     $( ".dashboard" ).hide();
     if( $( ".settings" ).css("display")=="none"){
-        $(sessionStorage.currentPage).hide();
+        $(localStorage.currentPage).hide();
         $( ".settings" ).fadeIn(600);
     }
 });
@@ -262,7 +266,7 @@ $(".ti-wallet").click(function(){
     $(".ti-home").removeClass("active");
     $(".ti-export").removeClass("active");
     $(".ti-wallet").addClass("active");
-    sessionStorage.currentPage=".cashout";
+    localStorage.currentPage=".cashout";
 });
 
 $(".ti-export").click(function(){
@@ -275,7 +279,7 @@ $(".ti-export").click(function(){
     $(".ti-wallet").removeClass("active");
     $(".ti-home").removeClass("active");
     $(".ti-export").addClass("active");
-    sessionStorage.currentPage=".dashboard";
+    localStorage.currentPage=".dashboard";
 });
 
 $(".ti-close").click(function(){
@@ -291,8 +295,8 @@ $("#showsignupbtn").click(function(){
 
 $(".ti-arrow-left").click(function(){
     $( ".settings" ).hide();
-    if( $( sessionStorage.currentPage).css("display")=="none"){
-        $( sessionStorage.currentPage ).fadeIn(600);
+    if( $( localStorage.currentPage).css("display")=="none"){
+        $( localStorage.currentPage ).fadeIn(600);
     }
 });
 
@@ -306,13 +310,26 @@ $(".ti-arrow-left").click(function(){
 //   console.log(selectedcheckbox);
 // });
 
+function checkstatus(){
+  if(localStorage.loggedID ==null){
 
+  }else{
+
+    if(localStorage.type=="customer"){
+      window.location="client-dashboard.html";
+    }else{
+      window.location="dashboard.html";
+    }
+
+  }
+
+}
 function selected_account(checkedbox){
 
   $('input[type="checkbox"]').prop("checked", false);
   $(checkedbox).prop("checked", true);
   var selectedcheckbox=checkedbox.value;
-  sessionStorage.loggedAccountType = selectedcheckbox;
+  localStorage.loggedAccountType = selectedcheckbox;
 
 }
 
@@ -356,6 +373,7 @@ function selected_account(checkedbox){
 
 		document.getElementById("barcodeScanner").onclick = function(){
 
+
 			cordova.plugins.barcodeScanner.scan(
 		 function (result) {
 
@@ -364,11 +382,12 @@ function selected_account(checkedbox){
 
 
        //The php script here adds the transaction to records and executes a function explode which does the deductions to the easysave_accounts
-       var theUrl="http://easysavegh.com/databasecommand.php?cmd=4&merchantid="+fundsFrom[0]+"&merchantname="+fundsFrom[1]+"&merchantamount="+fundsFrom[2]+"&userid="+sessionStorage.loggedID+"&username="+sessionStorage.loggedName;
+       var theUrl="http://easysavegh.com/databasecommand.php?cmd=4&merchantid="+fundsFrom[0]+"&merchantname="+fundsFrom[1]+"&merchantamount="+fundsFrom[2]+"&userid="+localStorage.loggedID+"&username="+localStorage.loggedName;
 
        $.ajax(theUrl,
              {
                async:true,
+               cache:false,
                complete:barcodeComplete
              });
 
@@ -446,6 +465,7 @@ function sendsms(thecode, phonenumber){
   $.ajax(theUrl,
         {
           async:true,
+          cache:false,
           complete:sendsmsComplete
         });
 
@@ -488,6 +508,7 @@ function loginMerchant(){
   $.ajax(theUrl,
         {
           async:true,
+          cache:false,
           complete:loginMerchantComplete
         });
 }
@@ -508,11 +529,11 @@ function loginMerchantComplete(xhr, status){
 
     else{
 
-      sessionStorage.loggedID = obj.user_id;
-      sessionStorage.loggedName = obj.firstname+" "+obj.lastname;
-
-
-      sessionStorage.loggedAccountType = "bank";
+      localStorage.loggedID = obj.user_id;
+      localStorage.loggedName = obj.firstname+" "+obj.lastname;
+        localStorage.type="merchant";
+      console.log(localStorage.loggedID);
+      localStorage.loggedAccountType = "bank";
       window.location="dashboard.html";
 
     }
@@ -528,6 +549,7 @@ function getUserWithPhoneNumber(){
   $.ajax(theUrl,
         {
           async:true,
+          cache:false,
           complete:getUserWithPhoneNumberComplete
         });
 }
@@ -590,6 +612,7 @@ function loginCustomer(){
   $.ajax(theUrl,
         {
           async:true,
+          cache:false,
           complete:loginCustomerComplete
         });
 }
@@ -609,12 +632,14 @@ function loginCustomerComplete(xhr, status){
     }
 
     else{
-      sessionStorage.loggedID = obj.user_id;
-      sessionStorage.loggedName = obj.firstname+" "+obj.lastname;
-      sessionStorage.cashoutamt=obj.cashout_amount;
+      localStorage.loggedID = obj.user_id;
+      localStorage.loggedName = obj.firstname+" "+obj.lastname;
+      localStorage.cashoutamt=obj.cashout_amount;
+      localStorage.type="customer";
 
 
-      sessionStorage.loggedAccountType = "bank";
+      localStorage.loggedAccountType = "bank";
+      console.log(localStorage.loggedID);
       window.location="client-dashboard.html";
 
     }
@@ -739,6 +764,7 @@ function signUp(){
       $.ajax(theUrl,
             {
               async:true,
+              cache:false,
               complete:signUpComplete
       });
 
@@ -783,13 +809,14 @@ function signUpComplete(xhr, status){
 
 function getTransactions(){
     $("#transfers").hide();
-    var id=sessionStorage.loggedID;
+    var id=localStorage.loggedID;
 
     var theUrl="http://easysavegh.com/databasecommand.php?cmd=6&id="+id;
 
     $.ajax(theUrl,
           {
             async:true,
+            cache:false,
             complete:getTransactionsComplete
     });
 
@@ -914,13 +941,14 @@ function getTransactionsComplete(xhr,status){
 
 function getTransfers(){
 
-  var id=sessionStorage.loggedID;
+  var id=localStorage.loggedID;
 
   var theUrl="http://easysavegh.com/databasecommand.php?cmd=12&id="+id;
 
   $.ajax(theUrl,
         {
           async:true,
+          cache:false,
           complete:getTransfersComplete
   });
 
@@ -1067,7 +1095,7 @@ function getTransfersComplete(xhr,status){
 
 function getBalance(){
 
-  var id=sessionStorage.loggedID;
+  var id=localStorage.loggedID;
 
 
   var theUrl="http://easysavegh.com/databasecommand.php?cmd=7&id="+id;
@@ -1075,6 +1103,7 @@ function getBalance(){
   $.ajax(theUrl,
         {
           async:true,
+          cache:false,
           complete:getBalanceComplete
   });
 
@@ -1108,9 +1137,9 @@ function getBalanceComplete(xhr,status){
 
 function updateCashout(){
 
-    var id=sessionStorage.loggedID;
+    var id=localStorage.loggedID;
     var cashoutamt = $('#cashout').val();
-    sessionStorage.cashoutamt=cashoutamt;
+    localStorage.cashoutamt=cashoutamt;
 
     console.log(cashoutamt);
 
@@ -1119,6 +1148,7 @@ function updateCashout(){
     $.ajax(theUrl,
           {
             async:true,
+            cache:false,
             complete:updateCashoutComplete
     });
 }
@@ -1145,7 +1175,7 @@ function updateCashoutComplete(xhr, status){
 }
 function getAccount(){
 
-  var id=sessionStorage.loggedID;
+  var id=localStorage.loggedID;
 
   var theUrl="http://easysavegh.com/databasecommand.php?cmd=10&id="+id;
 
@@ -1153,12 +1183,13 @@ function getAccount(){
   $.ajax(theUrl,
         {
           async:true,
+          cache:false,
           complete:addAccountComplete
   });
 }
 
 function addAccount(){
-  var id=sessionStorage.loggedID;
+  var id=localStorage.loggedID;
   var accountname=$('#accountname').val();
   var accountnumber=$('#accountnumber').val();
   var accountbranch=$('#accountbranch').val();
@@ -1169,6 +1200,7 @@ function addAccount(){
   $.ajax(theUrl,
         {
           async:true,
+          cache:false,
           complete:addAccountComplete
   });
 }
