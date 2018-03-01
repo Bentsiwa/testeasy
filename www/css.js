@@ -397,7 +397,7 @@ function selected_account(checkedbox){
    						// 	 'Format: ' + result.format + '\n' +
    						// 	 'Cancelled: ' + result.cancelled);
               getTransactions();
-              getBalance();
+
 		 },
 		 function (error) {
 				  alert('Scanning failed.');
@@ -808,6 +808,8 @@ function signUpComplete(xhr, status){
 }
 
 function getTransactions(){
+
+  alert("transaction");
     $("#transfers").hide();
     var id=localStorage.loggedID;
 
@@ -940,6 +942,7 @@ function getTransactionsComplete(xhr,status){
 }
 
 function getTransfers(){
+  alert("transfer");
 
   var id=localStorage.loggedID;
 
@@ -959,7 +962,7 @@ function getTransfers(){
 
 function getTransfersComplete(xhr,status){
   if(status!="success"){
-      UIkit.modal.alert('<p class="uk-modal-body">Error while fetching transfers.</p>');
+      alert('<p class="uk-modal-body">Error while fetching transfers.</p>');
       return;
   }else{
     var obj=JSON.parse(xhr.responseText);
@@ -1094,6 +1097,7 @@ function getTransfersComplete(xhr,status){
 }
 
 function getBalance(){
+  alert("balance");
 
   var id=localStorage.loggedID;
 
