@@ -852,7 +852,7 @@ function getTransactionsComplete(xhr,status){
 
                 while(length>0){
 
-                    var transaction_date=obj.transactions[length-1].transaction_date-7;
+                    var transaction_date=obj.transactions[length-1].transaction_date;
 
                     // Split timestamp into [ Y, M, D, h, m, s ]
                     var splitTime = transaction_date.split(/[- :]/);
@@ -987,7 +987,7 @@ function getTransfersComplete(xhr,status){
 
                 while(length>0){
 
-                    var transaction_date=obj.transactions[length-1].transaction_date-7;
+                    var transaction_date=obj.transactions[length-1].transaction_date;
 
                     // Split timestamp into [ Y, M, D, h, m, s ]
                     var splitTime = transaction_date.split(/[- :]/);
