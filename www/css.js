@@ -824,7 +824,7 @@ function getTransactions(){
 
 function getTransactionsComplete(xhr,status){
   if(status!="success"){
-      UIkit.modal.alert('<p class="uk-modal-body">Error while fetching transactions.</p>');
+      alert('<p class="uk-modal-body">Error while fetching transactions.</p>');
       return;
   }else{
     var obj=JSON.parse(xhr.responseText);
@@ -1114,7 +1114,7 @@ function getBalance(){
 
 function getBalanceComplete(xhr,status){
   if(status!="success"){
-      UIkit.modal.alert('<p class="uk-modal-body">Error while retrieving balance.</p>');
+      alert('<p class="uk-modal-body">Error while retrieving balance.</p>');
       return;
   }else{
     var obj=JSON.parse(xhr.responseText);
