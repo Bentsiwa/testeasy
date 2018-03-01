@@ -379,6 +379,7 @@ function selected_account(checkedbox){
 
        //split items separated by : once the QR code is caught.
        var fundsFrom = result.text.split(":");
+       alert(fundsFrom);
 
 
        //The php script here adds the transaction to records and executes a function explode which does the deductions to the easysave_accounts
