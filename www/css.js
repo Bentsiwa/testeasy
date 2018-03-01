@@ -723,7 +723,7 @@ function validateForm(){
 }
 function signUp(){
 
-    iqwerty.toast.Toast('Sighin In...');
+
      if (($('#accountnumber').val()==null && $('#mmnumber').val()==null)|| ($('#accountnumber').val()=="" && $('#mmnumber').val()=="")||($('#accountnumber').val()==null && $('#mmnumber').val()=="")||$('#accountnumber').val()=="" && $('#mmnumber').val()==null){
 
               $(".info-modal-div").hide();
@@ -797,11 +797,13 @@ function signUpComplete(xhr, status){
 
       $(".info-modal-div").hide();
 
-      $(".login-panel").slideToggle();
-      $(".login-pop").hide();
+      $(".login-panel").show();
+    //  $(".login-panel").slideToggle();
+
       $(".fa").removeClass("fa-chevron-up");
       $(".fa").addClass("fa-chevron-down");
-      $(".uk-form").hide();
+      //$(".uk-form").hide();
+
 
 
     }
