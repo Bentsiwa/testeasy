@@ -530,7 +530,7 @@ Image
  margin: 0 auto;
  top:0;
  left:0;
- height: 59vh;
+ height: 59vh!important;
  z-index: -1;
  position: absolute;
 

@@ -396,7 +396,7 @@ function selected_account(checkedbox){
    						// 	 'Result: ' + result.text + '\n' +
    						// 	 'Format: ' + result.format + '\n' +
    						// 	 'Cancelled: ' + result.cancelled);
-              getTransactions();
+              getBalance();
 
 		 },
 		 function (error) {
@@ -809,7 +809,6 @@ function signUpComplete(xhr, status){
 
 function getTransactions(){
 
-  alert("transaction");
     $("#transfers").hide();
     var id=localStorage.loggedID;
 
@@ -942,7 +941,7 @@ function getTransactionsComplete(xhr,status){
 }
 
 function getTransfers(){
-  alert("transfer");
+
 
   var id=localStorage.loggedID;
 
@@ -1097,7 +1096,7 @@ function getTransfersComplete(xhr,status){
 }
 
 function getBalance(){
-  alert("balance");
+
 
   var id=localStorage.loggedID;
 
