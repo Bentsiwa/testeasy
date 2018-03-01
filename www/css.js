@@ -396,7 +396,7 @@ function selected_account(checkedbox){
    						// 	 'Result: ' + result.text + '\n' +
    						// 	 'Format: ' + result.format + '\n' +
    						// 	 'Cancelled: ' + result.cancelled);
-
+              getTransactions();
               getBalance();
 		 },
 		 function (error) {
