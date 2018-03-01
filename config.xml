@@ -18,20 +18,20 @@
     <preference name="SplashScreenDelay" value="3000" />
     <platform name="android">
         <allow-intent href="market:*" />
-        <splash src="res/screen/android/easy.png" density="land-hdpi"/>
-        <splash src="res/screen/android/easy.png" density="land-ldpi"/>
-        <splash src="res/screen/android/easy.png" density="land-mdpi"/>
+        <splash src="res/screen/android/icon.png" density="land-hdpi"/>
+        <splash src="res/screen/android/icon.png" density="land-ldpi"/>
+        <splash src="res/screen/android/icon.png" density="land-mdpi"/>
         <splash src="res/screen/android/easy.png" density="land-xhdpi"/>
 
-        <splash src="res/screen/android/easy.png" density="port-hdpi"/>
-        <splash src="res/screen/android/easy.png" density="port-ldpi"/>
-        <splash src="res/screen/android/easy.png" density="port-mdpi"/>
-        <splash src="res/screen/android/easy.png" density="port-xhdpi"/>
+        <splash src="res/screen/android/icon.png" density="port-hdpi"/>
+        <splash src="res/screen/android/icon.png" density="port-ldpi"/>
+        <splash src="res/screen/android/icon.png" density="port-mdpi"/>
+        <splash src="res/screen/android/icon.png" density="port-xhdpi"/>
     </platform>
     <platform name="android">
-        <icon src="res/icon/android/easy.png" density="mdpi" />
-        <icon src="res/icon/android/easy.png" density="hdpi" />
-        <icon src="res/icon/android/easy.png" density="xhdpi" />
+        <icon src="res/icon/android/icon.png" density="mdpi" />
+        <icon src="res/icon/android/icon.png" density="hdpi" />
+        <icon src="res/icon/android/icon.png" density="xhdpi" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
