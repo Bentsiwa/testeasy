@@ -49,9 +49,7 @@
         <icon density="hdpi" src="res/icon/android/icon.png" />
         <icon density="xhdpi" src="res/icon/android/icon.png" />
     </platform>
-    <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
-        <string>To scan barcodes</string>
-    </edit-config>
+   
     <engine name="android" spec="^6.2.3" />
     <plugin name="cordova-plugin-barcodescanner" spec="^0.7.4" />
     <plugin name="cordova-plugin-camera" spec="^2.4.1" />
