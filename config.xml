@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.cordova.easysave01" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>EasySave</name>
     <description>
         An app that allows users to save money.
@@ -18,30 +18,45 @@
     <preference name="SplashScreenDelay" value="3000" />
     <platform name="android">
         <allow-intent href="market:*" />
-        <splash src="res/screen/android/icon.png" density="land-hdpi"/>
-        <splash src="res/screen/android/icon.png" density="land-ldpi"/>
-        <splash src="res/screen/android/icon.png" density="land-mdpi"/>
-        <splash src="res/screen/android/easy.png" density="land-xhdpi"/>
-
-        <splash src="res/screen/android/icon.png" density="port-hdpi"/>
-        <splash src="res/screen/android/icon.png" density="port-ldpi"/>
-        <splash src="res/screen/android/icon.png" density="port-mdpi"/>
-        <splash src="res/screen/android/icon.png" density="port-xhdpi"/>
+        <splash density="land-hdpi" src="res/screen/android/icon.png" />
+        <splash density="land-ldpi" src="res/screen/android/icon.png" />
+        <splash density="land-mdpi" src="res/screen/android/icon.png" />
+        <splash density="land-xhdpi" src="res/screen/android/easy.png" />
+        <splash density="port-hdpi" src="res/screen/android/icon.png" />
+        <splash density="port-ldpi" src="res/screen/android/icon.png" />
+        <splash density="port-mdpi" src="res/screen/android/icon.png" />
+        <splash density="port-xhdpi" src="res/screen/android/icon.png" />
     </platform>
     <platform name="android">
-        <icon src="res/icon/android/icon.png" density="mdpi" />
-        <icon src="res/icon/android/icon.png" density="hdpi" />
-        <icon src="res/icon/android/icon.png" density="xhdpi" />
+        <icon density="mdpi" src="res/icon/android/icon.png" />
+        <icon density="hdpi" src="res/icon/android/icon.png" />
+        <icon density="xhdpi" src="res/icon/android/icon.png" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
+        <splash density="land-hdpi" src="res/screen/android/icon.png" />
+        <splash density="land-ldpi" src="res/screen/android/icon.png" />
+        <splash density="land-mdpi" src="res/screen/android/icon.png" />
+        <splash density="land-xhdpi" src="res/screen/android/easy.png" />
+        <splash density="port-hdpi" src="res/screen/android/icon.png" />
+        <splash density="port-ldpi" src="res/screen/android/icon.png" />
+        <splash density="port-mdpi" src="res/screen/android/icon.png" />
+        <splash density="port-xhdpi" src="res/screen/android/icon.png" />
     </platform>
+    <platform name="ios">
+        <icon density="mdpi" src="res/icon/android/icon.png" />
+        <icon density="hdpi" src="res/icon/android/icon.png" />
+        <icon density="xhdpi" src="res/icon/android/icon.png" />
+    </platform>
+    <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
+        <string>To scan barcodes</string>
+    </edit-config>
     <engine name="android" spec="^6.2.3" />
     <plugin name="cordova-plugin-barcodescanner" spec="^0.7.4" />
     <plugin name="cordova-plugin-camera" spec="^2.4.1" />
     <plugin name="cordova-plugin-file" spec="^4.3.3" />
-    <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
-    <plugin name="phonegap-plugin-barcodescanner" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
+    <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
+    <plugin name="phonegap-plugin-barcodescanner" spec="^6.0.8" />
 </widget>
