@@ -48,6 +48,12 @@ ini_set('display_errors', 'on');
 	case 13:
 				sendsms();
 				break;
+	case 14:
+				sendMoneyRequest();
+				break;
+	case 15:
+				transferToAccount();
+				break;
 		default:
 			echo '{"result": 0, "message": "Wrong cmd"}';	//change to json message
 			break;
@@ -692,8 +698,6 @@ ini_set('display_errors', 'on');
 
 
 	function sendsms(){
-
-
 		if(!isset($_REQUEST['smscode'])){
 			echo '{"result":0,"message":"No code entered."}';
 			return;
@@ -745,6 +749,164 @@ ini_set('display_errors', 'on');
 		}
 
 	}
+
+	function transferToAccount(){
+		if(!isset($_REQUEST['type'])){
+			echo '{"result":0,"message":"No account type entered."}';
+			return;
+		}
+
+		if($_REQUEST['type']==""){
+			echo '{"result":0,"message":"No account type entered."}';
+			return;
+		}
+		if(!isset($_REQUEST['amount'])){
+			echo '{"result":0,"message":"No amount entered."}';
+			return;
+		}
+
+		if($_REQUEST['amount']==""){
+			echo '{"result":0,"message":"No amount entered."}';
+			return;
+		}
+		if(!isset($_REQUEST['userid'])){
+			echo '{"result":0,"message":"No user ID."}';
+			return;
+		}
+
+		if($_REQUEST['userid']==""){
+			echo '{"result":0,"message":"No user ID."}';
+			return;
+		}
+
+
+		$type=$_REQUEST['type'];
+		$amount=$_REQUEST['amount'];
+		$userid=$_REQUEST['userid'];
+
+
+		include('transactions.php');
+		$obj=new transactions();
+
+		include('easysave.php');
+		$item=new easysave();
+
+		$row=$obj->transferToAccount($type, $userid, $amount);
+
+		if($row==true){
+			$row=$item-> resetBalance($userid);
+			if($row==true){
+
+
+				$to      = 'easysavegh@gmail.com';
+				$subject = 'EasySave money transfer';
+				$message = 'Transfer GHS '.$amount. ' to User with id '.$userid. ' on account '.$type;
+
+
+				mail($to, $subject, $message);
+				echo '{"result":1,"message":"Cashout amount sent to your account."}';
+			}
+
+			else{
+				echo '{"result":0,"message":"Failed to send cashout amount to your account."}';
+			}
+
+		}
+
+		else{
+			echo '{"result":0,"message":"Failed to send cashout amount to your account."}';
+		}
+	}
+
+	function sendMoneyRequest(){
+
+
+				if(!isset($_REQUEST['money'])){
+					echo '{"result":0,"message":"Amount not entered."}';
+					return;
+				}
+				if($_REQUEST['money']==""){
+					echo '{"result":0,"message":"Amount not entered.}';
+					return;
+				}
+				$money=$_REQUEST['money'];
+
+
+				include 'sites/Hubtel/Api.php';
+				require './vendor/autoload.php';
+
+				$auth = new BasicAuth("videkyxo", "widmeweg");
+
+				// instance of ApiHost
+				$apiHost = new ApiHost($auth);
+
+				// instance of AccountApi
+				$accountApi = new AccountApi($apiHost);
+
+				// set web console logging to false
+				$disableConsoleLogging = false;
+
+				// Let us try to send some message
+				$messagingApi = new MessagingApi($apiHost, $disableConsoleLogging);
+				try {
+					// Send a quick message
+					$messageResponse = $messagingApi->sendQuickMessage("EasySave",$phonenumber, $smscode." is your verification code for EasySave.");
+
+
+					if ($messageResponse instanceof MessageResponse) {
+							echo '{"result":1,"message":"'. $messageResponse->getStatus().'"}';
+					} elseif ($messageResponse instanceof HttpResponse) {
+							echo  '{"result":0,"message":"'. "\nServer Response Status : " . $messageResponse->getStatus().'"}';
+					}
+				} catch (Exception $ex) {
+					echo '{"result":0,"message":"'.$ex->getTraceAsString().'"}';
+				}
+
+
+
+				$receive_momo_request = array(
+				         'CustomerName' => 'Efua Bentsiwa Bainson',
+					  'CustomerMsisdn'=> '0551422366',
+					  'CustomerEmail'=> 'customer@gmail.com',
+					  'Channel'=> 'mtn-gh',
+					  'Amount'=> 0.8,
+					  'PrimaryCallbackUrl'=> 'http://requestb.in/1minotz1',
+					  'SecondaryCallbackUrl'=> 'http://requestb.in/1minotz1',
+					  'Description'=> 'T Shirt',
+					  'ClientReference'=> '23213',
+				);
+
+				//API Keys
+
+				$clientId = 'videkyxo';
+				$clientSecret = 'widmeweg';
+				$basic_auth_key =  'Basic ' . base64_encode($clientId . ':' . $clientSecret);
+				$request_url = 'https://api.hubtel.com/v1/merchantaccount/merchants/HMXXXXXXX/receive/mobilemoney';
+				$receive_momo_request = json_encode($receive_momo_request);
+
+				$ch =  curl_init($request_url);
+						curl_setopt( $ch, CURLOPT_POST, true );
+						curl_setopt( $ch, CURLOPT_POSTFIELDS, $receive_momo_request);
+						curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+						curl_setopt( $ch, CURLOPT_HTTPHEADER, array(
+						    'Authorization: '.$basic_auth_key,
+						    'Cache-Control: no-cache',
+						    'Content-Type: application/json',
+						  ));
+
+				$result = curl_exec($ch);
+				$err = curl_error($ch);
+				curl_close($ch);
+
+				if($err){
+					echo $err;
+				}else{
+					echo $result;
+				}
+
+
+			}
+
 
 
 

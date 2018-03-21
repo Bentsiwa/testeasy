@@ -17,12 +17,15 @@ include_once("adb.php");
      * @param [type] $userid         [utilize userId in keeping track of the destination of the transaction]
      * @param [type] $merchantamount [this is the amount that was involved from merchant to source]
      */
-		function addTransaction($merchantid, $userid, $merchantamount){
+		function addTransaction($merchantid, $userid, $merchantamount,$newmerchantbalance, $newcustomerbalance){
 			$strQuery="insert into transactions set
 							customer_id='$userid',
 							merchant_id='$merchantid',
 							amount_sent='$merchantamount',
-							status='pending',";
+							merchant_balance='$newmerchantbalance',
+							customer_balance='$newcustomerbalance',
+							status='success'";
+
 			return $this->query($strQuery);
 		}
 

@@ -46,6 +46,16 @@ include_once("adb.php");
 			return $this->query($strQuery);
 		}
 
+		function transferToAccount($type, $userid, $amount){
+			$strQuery="insert into bank_transfer set
+							user_id='$userid',
+							medium='$type',
+							amount='$amount',
+							status='success'";
+
+			return $this->query($strQuery);
+		}
+
 
 
 	}

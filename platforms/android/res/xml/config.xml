@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.cordova.easysave01" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <feature name="Whitelist">
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
@@ -14,6 +14,10 @@
     <allow-navigation href="cdvfile:*" />
     <feature name="BarcodeScanner">
         <param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner" />
+    </feature>
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
+        <param name="onload" value="true" />
     </feature>
     <name>EasySave</name>
     <description>
@@ -30,10 +34,21 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
+        <string>To scan barcodes</string>
+    </edit-config>
     <allow-intent href="market:*" />
+    <splash density="land-hdpi" src="res/screen/android/icon.png" />
+    <splash density="land-ldpi" src="res/screen/android/icon.png" />
+    <splash density="land-mdpi" src="res/screen/android/icon.png" />
+    <splash density="land-xhdpi" src="res/screen/android/easy.png" />
+    <splash density="port-hdpi" src="res/screen/android/icon.png" />
+    <splash density="port-ldpi" src="res/screen/android/icon.png" />
+    <splash density="port-mdpi" src="res/screen/android/icon.png" />
+    <splash density="port-xhdpi" src="res/screen/android/icon.png" />
+    <icon density="mdpi" src="res/icon/android/icon.png" />
+    <icon density="hdpi" src="res/icon/android/icon.png" />
+    <icon density="xhdpi" src="res/icon/android/icon.png" />
     <preference name="loglevel" value="DEBUG" />
-    <feature name="SplashScreen">
-        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
-        <param name="onload" value="true" />
-    </feature>
+    <preference name="SplashScreenDelay" value="3000" />
 </widget>

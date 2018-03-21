@@ -342,20 +342,25 @@ Divs/ Panels
  margin-left: auto;
 
  padding-bottom: 15px;
+
 }
 @media (min-width: 768px) {
  .container {
   width: 750px;
+
  }
+
 }
 @media (min-width: 992px) {
  .container {
   width: 970px;
+
  }
 }
 @media (min-width: 1200px) {
  .container {
   width: 1170px;
+
  }
 }
 .signup-panel{
@@ -418,15 +423,18 @@ Divs/ Panels
 
 .signup-form
 {
- display: none;
- height:80%;
- overflow: scroll;
+   display: none;
+   overflow:scroll;
+
 }
 
 #signupcontainer{
-  height:100%;
-  overflow: scroll;
+  overflow:scroll;
+
+
 }
+
+
 .type-bank, .type-mobile{
   width: 30%;
   height: 20%;
@@ -556,6 +564,11 @@ select{
  color:#ffbf80;
  box-shadow: 0 1px 4px rgba(0, 0, 0, .1);
 }
+#signupfirstname, #signuplastname{
+   width:50%;
+
+
+}
 
 .verification_number
 {
@@ -568,7 +581,7 @@ select{
 
 
 }
-#signupgender,#idtype,#signupdob{
+#signupgender,#idtype,#signupdob, #network{
   background-color: white;
 }
 /*

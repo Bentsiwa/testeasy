@@ -258,6 +258,17 @@ $(".ti-settings").click(function(){
     }
 });
 
+$(".ti-plus").click(function(){
+  $(".info-modal-info").html("REQUEST MONEY");
+  $(".info-modal-content").html('<span class="modal-info">Money will be sent directly from your mobile money account.'
+                                +' Approve request in order for money to be sent. </span>'
+                                +'<input type="number" id="requestmoney" placeholder="GHS 0">'
+                                +'<div onClick="sendMoneyRequest()" class="cashout-btn btn" >Send Request</div>');
+  $(".info-cover").fadeIn();
+  $(".info-modal-div").fadeIn();
+  $(".info-modal").fadeIn(600);
+});
+
 $(".ti-wallet").click(function(){
     $( ".dashboard" ).hide();
     if( $( ".cashout" ).css("display")=="none"){
@@ -371,6 +382,8 @@ function selected_account(checkedbox){
 	function onDeviceReady() {
 
 
+
+
 		document.getElementById("barcodeScanner").onclick = function(){
 
 
@@ -398,6 +411,7 @@ function selected_account(checkedbox){
    						// 	 'Format: ' + result.format + '\n' +
    						// 	 'Cancelled: ' + result.cancelled);
               getTransactions();
+              transferToAccount();
 
 		 },
 		 function (error) {
@@ -533,8 +547,8 @@ function loginMerchantComplete(xhr, status){
       localStorage.loggedID = obj.user_id;
       localStorage.loggedName = obj.firstname+" "+obj.lastname;
         localStorage.type="merchant";
-      console.log(localStorage.loggedID);
-      localStorage.loggedAccountType = "bank";
+       console.log(localStorage.loggedID);
+      // localStorage.loggedAccountType = "bank";
       window.location="dashboard.html";
 
     }
@@ -638,8 +652,8 @@ function loginCustomerComplete(xhr, status){
       localStorage.cashoutamt=obj.cashout_amount;
       localStorage.type="customer";
 
-
-      localStorage.loggedAccountType = "bank";
+      //
+      // localStorage.loggedAccountType = "bank";
       console.log(localStorage.loggedID);
       window.location="client-dashboard.html";
 
@@ -1134,6 +1148,7 @@ function getBalanceComplete(xhr,status){
     }
     else{
 
+      localStorage.loggedBalance=obj.balance;
       accountbalance.innerHTML="GHS "+obj.balance;
 
     }
@@ -1175,6 +1190,7 @@ function updateCashoutComplete(xhr, status){
     else{
 
       window.location="client-dashboard.html";
+      transferToAccount();
 
     }
   }
@@ -1242,11 +1258,16 @@ function addAccountComplete(xhr, status){
 
 
            result+="<label  class='account checkbox-styled btn'><input onclick='selected_account(this)' type='checkbox' name='selected_account' value='bank' checked/><span class='container'><i class='ti-image small-text'></i><span class='small-text' >"+obj.bank_account[length-1].bank_name+"</span><span class='time small-text'> "+obj.bank_account[length-1].account_name+"</span><p class='block'>"+hiddenstr+" </p><span class='small-text' >"+obj.bank_account[length-1].bank_branch+" Branch"+"</span></span></label></div>";
+           localStorage.loggedAccountType = "bank";
+           console.log(localStorage.loggedAccountType);
          }
          if(!(obj.bank_account[length-1].mmphone=="")){
            var mmnumber=obj.bank_account[length-1].mmphone;
            var hiddenmmnumber="XXXX XXXX "+mmnumber.substring(8);
            result+="<label  class='account checkbox-styled'><input onclick='selected_account(this)'type='checkbox' name='selected_account' value='mobilemoney' /><span class='container mobilemoney'><i class='ti-image small-text'></i><span class='small-text' >"+obj.bank_account[length-1].network+"</span><span class='time small-text'>"+obj.bank_account[length-1].mm_name+" </span><p class='block'>"+hiddenmmnumber+" </p><span class='small-text' ></span></span></label></div>";
+           localStorage.loggedAccountType = "mobilemoney";
+           console.log(localStorage.loggedAccountType);
+
         }
       }
 
@@ -1279,7 +1300,102 @@ function addAccountComplete(xhr, status){
  * @return {[null]} [null]
  */
 
+function sendMoneyRequest(){
 
+  var money = $('#requestmoney').val();
+
+  var theUrl="http://easysavegh.com/databasecommand.php?cmd=14&money="+money;
+  $.ajax(theUrl,
+        {
+          async:true,
+          cache:false,
+          complete:sendMoneyRequestComplete
+        });
+
+}
+
+function sendMoneyRequestComplete(xhr, status){
+  if(status!="success"){
+      UIkit.modal.alert('<p class="uk-modal-body">Error</p>');
+      return;
+  }else{
+    var obj = JSON.parse(xhr.responseText);
+    console.log(obj);
+    if(obj.result==0){
+
+      UIkit.modal.alert('<p class="uk-modal-body">'+obj.message+'</p>');
+    }
+    else{
+
+
+    }
+  }
+}
+
+
+function transferToAccount(){
+
+  var accounttype = localStorage.loggedAccountType;
+  console.log(accounttype);
+  var cashoutamt=localStorage.cashoutamt;
+  console.log(cashoutamt);
+  var balance=localStorage.loggedBalance;
+  console.log("balance "+balance);
+
+
+  if((balance==cashoutamt)&& (balance>0)){
+    console.log("trans");
+
+    var r = confirm("Do you want to transfer the balance to your account?");
+    if (r == true) {
+
+      var theUrl="http://easysavegh.com/databasecommand.php?cmd=15&type="+accounttype+"&amount="+cashoutamt+"&userid="+localStorage.loggedID;
+      prompt('url',theUrl);
+      $.ajax(theUrl,
+            {
+              async:true,
+              cache:false,
+              complete:transferToAccountComplete
+          });
+    } else {
+        console.log('Transfer cancelled.')
+    }
+
+    // UIkit.modal.confirm('Do you want to transfer the balance to your account?').then(function() {
+    //   prompt('url',theUrl);
+    //   var theUrl="http://easysavegh.com/databasecommand.php?cmd=15&type="+accounttype+"&amount="+cashoutamt+"&userid="+localStorage.loggedID;
+    //   $.ajax(theUrl,
+    //         {
+    //           async:true,
+    //           cache:false,
+    //           complete:transferToAccountComplete
+    //       });
+    // }, function () {
+    //     console.log('Transfer cancelled.')
+    // });
+
+  }else{
+
+  }
+}
+
+function transferToAccountComplete(xhr, status){
+  if(status!="success"){
+      UIkit.modal.alert('<p class="uk-modal-body">Error</p>');
+      return;
+  }else{
+    var obj = JSON.parse(xhr.responseText);
+    console.log(obj);
+    if(obj.result==0){
+
+      UIkit.modal.alert('<p class="uk-modal-body">'+obj.message+'</p>');
+    }
+    else{
+      UIkit.modal.alert('<p class="uk-modal-body">Transfer successful.</p>');
+
+    }
+  }
+}
 
 
 

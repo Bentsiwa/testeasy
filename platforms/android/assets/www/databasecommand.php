@@ -166,6 +166,8 @@ ini_set('display_errors', 'on');
  * [PLACE MOBILE MONEY ON BANK ACCOUNT OVERLAY HERE IF REQUIRED BUT RECOMMEND SEPARATE FUNCTION AS ITS A CASH IN/ CASHOUT]
  * @return [type] [description]
  */
+
+
   function prepareTransaction()
   {
 
@@ -175,11 +177,37 @@ ini_set('display_errors', 'on');
     $userid = $_REQUEST['userid'];
 
     include("transactions.php");
+		include_once("easysave.php");
+		$obj = new easysave();
+
+		$balance = $obj->getBalance($merchantid);
+
+		if($balance==false){
+
+			echo '{"result":0,"message":Transaction failed"}';
+		}
+		else{
+			$balance=$obj->fetch();
+			$newmerchantbalance=$balance['balance'];
+		}
+
+		$balance = $obj->getBalance($userid);
+
+		if($balance==false){
+
+			echo '{"result":0,"message":Transaction failed"}';
+		}
+		else{
+			$balance=$obj->fetch();
+			$newcustomerbalance=$balance['balance'];
+		}
+
+
     $transaction = new transactions();
 
     explodeTransaction($merchantid, $userid, $merchantamount);
 
-    $validation = $transaction->addTransaction($merchantid, $userid, $merchantamount);
+    $validation = $transaction->addTransaction($merchantid, $userid, $merchantamount,$newmerchantbalance,$newcustomerbalance);
 
     if($validation==false){
 
@@ -187,7 +215,7 @@ ini_set('display_errors', 'on');
 
     }
     else{
-        echo '{"result":0,"message":"Transaction Created Successfully"}';
+        echo '{"result":1,"message":"Transaction created Successfully"}';
     }
 
 
@@ -204,16 +232,50 @@ ini_set('display_errors', 'on');
  */
   function explodeTransaction($merchantid, $userid, $merchantamount)
   {
+		include_once("easysave.php");
 
-     include("easysave.php");
-     $easysave = new easysave();
-
-    //update merchant balance to deduct the amount from QR code
-    $merchantDeduct = $easysave->easysaveAccountDeduct($merchantid,$merchantamount);
+     $obj = new easysave();
 
 
-    //update user balance to credit the amount from QR code
-    $customerCredit = $easysave->easysaveAccountCredit($userid,$merchantamount);
+	 	$balance = $obj->getBalance($merchantid);
+
+		if($balance==false){
+
+			echo '{"result":0,"message":Transaction failed"}';
+		}
+		else{
+
+			$balance=$obj->fetch();
+
+
+			$merchantDeduct = $obj ->easysaveAccountDeduct($merchantid,$merchantamount, $balance['balance']);
+			if($merchantDeduct==false){
+				echo '{"result":0,"message":Transaction failed"}';
+
+			}else{
+				$balance = $obj->getBalance($userid);
+				if($balance==false){
+						echo '{"result":0,"message":Transaction failed"}';
+				}else{
+					$balance=$obj->fetch();
+
+
+					$customerCredit = $obj ->easysaveAccountCredit($userid,$merchantamount, $balance['balance']);
+					if($customerCredit==false){
+						echo '{"result":0,"message":Transaction failed"}';
+					}
+						else{
+
+						}
+				}
+			}
+		}
+				//update merchant balance to deduct the amount from QR code
+
+
+
+
+
 
   }
 
@@ -400,17 +462,28 @@ ini_set('display_errors', 'on');
 			$idnumber=$_REQUEST['idnumber'];
 
 
-
+			include_once('easysave.php');
 			include('users.php');
 			$obj=new users();
 			$row=$obj->addNewUser($firstname,$lastname,$email,$password,$phonenumber,$gender, $dob, $account_status, $type,$accountname,$accountnumber,$accountbranch, $bankname,$mmnumber, $network, $idtype, $idnumber, $mmname);
 
 			if($row==true){
-			echo '{"result":1,"message":"Sign up successful"}';
+				$row=$obj->getID($email, $password);
+				$row=$obj->fetch();
+				if($row==false){
+					echo '{"result":0,"message":"Failed to sign up"}';
+				}else{
+					$obj=new easysave();
+					$row=$obj->addeasysaveaccount($row['user_id']);
+					if($row==true){
+						echo '{"result":1,"message":"Sign up successful"}';
+					}
 			}
+		}
+
 
 			else{
-			echo '{"result":0,"message":"Failed to sign up.up"}';
+			echo '{"result":0,"message":"Failed to sign up"}';
 			}
 	}
 
@@ -660,7 +733,7 @@ ini_set('display_errors', 'on');
 		try {
 			// Send a quick message
 			$messageResponse = $messagingApi->sendQuickMessage("EasySave",$phonenumber, $smscode." is your verification code for EasySave.");
-			
+
 
 			if ($messageResponse instanceof MessageResponse) {
 					echo '{"result":1,"message":"'. $messageResponse->getStatus().'"}';

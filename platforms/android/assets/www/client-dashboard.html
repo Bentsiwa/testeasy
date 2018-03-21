@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval';"> -->
+		
 		<title>EasySave</title>
 		<meta name="format-detection" content="telephone=no">
 		<meta name="msapplication-tap-highlight" content="no">
@@ -22,10 +22,12 @@
 					<a href="#"><i class="ti-share"></i></a>
 					<a class="alt" href="#"><i class="ti-power-off"></i></a>
 				</div><br><br>
-				<div class="header-balance">
+				<center>
+					<div class="header-balance">
 
-					<span id="accountbalance" class="amount-balance">GHS 0.00</span>
-				</div>
+						<span id="accountbalance" class="amount-balance">GHS 0.00</span>
+					</div>
+				</center>
 				<span class="info">Available Balance</span>
 				<div class="icon-div">
 					<span class="scan" id="barcodeScanner" ><i class="ti-camera"></i></span>
@@ -163,6 +165,7 @@
 	<script type="text/javascript" src="css.js"></script>
 	<script type="text/javascript" src="qrcode.js"></script>
 	<script src="sites/uikit/js/uikit.min.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
 
 	</body>
 </html>
