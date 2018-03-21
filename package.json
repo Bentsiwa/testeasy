@@ -12,7 +12,6 @@
     "dependencies": {
         "cordova-android": "^6.2.3",
         "cordova-ios": "^4.4.0",
-        "cordova-plugin-barcodescanner": "^0.7.4",
         "cordova-plugin-camera": "^2.4.1",
         "cordova-plugin-compat": "^1.2.0",
         "cordova-plugin-file": "^4.3.3",
@@ -25,9 +24,10 @@
             "cordova-plugin-whitelist": {},
             "cordova-plugin-camera": {},
             "cordova-plugin-file": {},
-            "cordova-plugin-barcodescanner": {},
-            "phonegap-plugin-barcodescanner": {},
-            "cordova-plugin-splashscreen": {}
+            "cordova-plugin-splashscreen": {},
+            "phonegap-plugin-barcodescanner": {
+                "CAMERA_USAGE_DESCRIPTION": " "
+            }
         },
         "platforms": [
             "android"

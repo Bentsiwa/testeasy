@@ -31,10 +31,10 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-barcodescanner": {
+    "cordova-plugin-splashscreen": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-barcodescanner@^0.7.4"
+            "id": "cordova-plugin-splashscreen@5.0.2"
         },
         "is_top_level": true,
         "variables": {}
@@ -42,15 +42,7 @@
     "phonegap-plugin-barcodescanner": {
         "source": {
             "type": "registry",
-            "id": "phonegap-plugin-barcodescanner@^6.0.8"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-splashscreen": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-splashscreen@5.0.2"
+            "id": "phonegap-plugin-barcodescanner@6.0.8"
         },
         "is_top_level": true,
         "variables": {}

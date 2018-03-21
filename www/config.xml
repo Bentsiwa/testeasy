@@ -119,7 +119,7 @@
     <splash src="res/screens/wp8/SplashScreenImage.png" width="768" height="1280"/>
   </platform>
   <preference name="android-build-tool" value="gradle"/>
-  <plugin name="cordova-plugin-barcodescanner"/>
+
   <plugin name="cordova-plugin-camera"  />
   <plugin name="cordova-plugin-media-capture" />
   <plugin name="cordova-plugin-compat" />
