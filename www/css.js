@@ -410,8 +410,9 @@ function selected_account(checkedbox){
    						// 	 'Result: ' + result.text + '\n' +
    						// 	 'Format: ' + result.format + '\n' +
    						// 	 'Cancelled: ' + result.cancelled);
-              getTransactions();
               transferToAccount();
+              getTransactions();
+
 
 		 },
 		 function (error) {
@@ -1343,14 +1344,13 @@ function transferToAccount(){
   console.log("balance "+balance);
 
 
-  if((balance==cashoutamt)&& (balance>0)){
-    console.log("trans");
+  if((balance>=cashoutamt)&& (balance>0)){
 
-    var r = confirm("Do you want to transfer the balance to your account?");
+    var r = confirm("You have reached your cashout amount. Do you want to transfer the balance to your account?");
     if (r == true) {
 
       var theUrl="http://easysavegh.com/databasecommand.php?cmd=15&type="+accounttype+"&amount="+cashoutamt+"&userid="+localStorage.loggedID;
-      prompt('url',theUrl);
+
       $.ajax(theUrl,
             {
               async:true,
