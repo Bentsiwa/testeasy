@@ -380,6 +380,39 @@ function selected_account(checkedbox){
 
 	document.addEventListener('deviceready', onDeviceReady.bind(this), false);
 	function onDeviceReady() {
+      $("#app-status-ul").append('<li>registering ' + device.platform + '</li>');
+      if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
+          pushNotification.register(
+          successHandler,
+          errorHandler,
+          {
+              "senderID":"replace_with_sender_id",
+              "ecb":"onNotification"
+          });
+      } else if ( device.platform == 'blackberry10'){
+          pushNotification.register(
+          successHandler,
+          errorHandler,
+          {
+              invokeTargetId : "replace_with_invoke_target_id",
+              appId: "replace_with_app_id",
+              ppgUrl:"replace_with_ppg_url", //remove for BES pushes
+              ecb: "pushNotificationHandler",
+              simChangeCallback: replace_with_simChange_callback,
+              pushTransportReadyCallback: replace_with_pushTransportReady_callback,
+              launchApplicationOnPush: true
+          });
+      } else {
+          pushNotification.register(
+          tokenHandler,
+          errorHandler,
+          {
+              "badge":"true",
+              "sound":"true",
+              "alert":"true",
+              "ecb":"onNotificationAPN"
+          });
+      }
 
 
 
@@ -433,6 +466,80 @@ function selected_account(checkedbox){
 	} ;
 
 	})();
+
+  function tokenHandler (result) {
+      $("#app-status-ul").append('<li>token: '+ result +'</li>');
+      // Your iOS push server needs to know the token before it can push to this device
+      // here is where you might want to send it the token for later use.
+  }
+
+  function successHandler (result) {
+      $("#app-status-ul").append('<li>success:'+ result +'</li>');
+  }
+
+  function errorHandler (error) {
+      $("#app-status-ul").append('<li>error:'+ error +'</li>');
+}
+
+
+// Android and Amazon Fire OS
+function onNotification(e) {
+  $("#app-status-ul").append('<li>EVENT -> RECEIVED:' + e.event + '</li>');
+
+  switch( e.event )
+  {
+  case 'registered':
+    if ( e.regid.length > 0 )
+    {
+      $("#app-status-ul").append('<li>REGISTERED -> REGID:' + e.regid + "</li>");
+      // Your GCM push server needs to know the regID before it can push to this device
+      // here is where you might want to send it the regID for later use.
+      console.log("regID = " + e.regid);
+    }
+  break;
+
+  case 'message':
+    // if this flag is set, this notification happened while we were in the foreground.
+    // you might want to play a sound to get the user's attention, throw up a dialog, etc.
+    if ( e.foreground )
+    {
+      $("#app-status-ul").append('<li>--INLINE NOTIFICATION--' + '</li>');
+
+      // on Android soundname is outside the payload.
+      // On Amazon FireOS all custom attributes are contained within payload
+      var soundfile = e.soundname || e.payload.sound;
+      // if the notification contains a soundname, play it.
+      var my_media = new Media("/android_asset/www/"+ soundfile);
+      my_media.play();
+    }
+    else
+    {  // otherwise we were launched because the user touched a notification in the notification tray.
+      if ( e.coldstart )
+      {
+        $("#app-status-ul").append('<li>--COLDSTART NOTIFICATION--' + '</li>');
+      }
+      else
+      {
+        $("#app-status-ul").append('<li>--BACKGROUND NOTIFICATION--' + '</li>');
+      }
+    }
+
+     $("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.payload.message + '</li>');
+           //Only works for GCM
+     $("#app-status-ul").append('<li>MESSAGE -> MSGCNT: ' + e.payload.msgcnt + '</li>');
+     //Only works on Amazon Fire OS
+     $status.append('<li>MESSAGE -> TIME: ' + e.payload.timeStamp + '</li>');
+  break;
+
+  case 'error':
+    $("#app-status-ul").append('<li>ERROR -> MSG:' + e.msg + '</li>');
+  break;
+
+  default:
+    $("#app-status-ul").append('<li>EVENT -> Unknown, an event was received and we do not know what it is</li>');
+  break;
+  }
+}
 
 function account_back(){
 
@@ -956,6 +1063,7 @@ function getTransactionsComplete(xhr,status){
   }
   getBalance();
   getTransfers();
+  getAccount();
 }
 
 function getTransfers(){
@@ -1260,14 +1368,14 @@ function addAccountComplete(xhr, status){
 
            result+="<label  class='account checkbox-styled btn'><input onclick='selected_account(this)' type='checkbox' name='selected_account' value='bank' checked/><span class='container'><i class='ti-image small-text'></i><span class='small-text' >"+obj.bank_account[length-1].bank_name+"</span><span class='time small-text'> "+obj.bank_account[length-1].account_name+"</span><p class='block'>"+hiddenstr+" </p><span class='small-text' >"+obj.bank_account[length-1].bank_branch+" Branch"+"</span></span></label></div>";
            localStorage.loggedAccountType = "bank";
-           console.log(localStorage.loggedAccountType);
+
          }
          if(!(obj.bank_account[length-1].mmphone=="")){
            var mmnumber=obj.bank_account[length-1].mmphone;
            var hiddenmmnumber="XXXX XXXX "+mmnumber.substring(8);
            result+="<label  class='account checkbox-styled'><input onclick='selected_account(this)'type='checkbox' name='selected_account' value='mobilemoney' /><span class='container mobilemoney'><i class='ti-image small-text'></i><span class='small-text' >"+obj.bank_account[length-1].network+"</span><span class='time small-text'>"+obj.bank_account[length-1].mm_name+" </span><p class='block'>"+hiddenmmnumber+" </p><span class='small-text' ></span></span></label></div>";
            localStorage.loggedAccountType = "mobilemoney";
-           console.log(localStorage.loggedAccountType);
+
 
         }
       }
@@ -1349,7 +1457,7 @@ function transferToAccount(){
     var r = confirm("You have reached your cashout amount. Do you want to transfer the balance to your account?");
     if (r == true) {
 
-      var theUrl="http://easysavegh.com/databasecommand.php?cmd=15&type="+accounttype+"&amount="+cashoutamt+"&userid="+localStorage.loggedID;
+      var theUrl="http://easysavegh.com/databasecommand.php?cmd=15&type="+accounttype+"&balance="+balance+"&amount="+cashoutamt+"&userid="+localStorage.loggedID;
 
       $.ajax(theUrl,
             {
@@ -1385,7 +1493,7 @@ function transferToAccountComplete(xhr, status){
       return;
   }else{
     var obj = JSON.parse(xhr.responseText);
-    console.log(obj);
+
     if(obj.result==0){
 
       UIkit.modal.alert('<p class="uk-modal-body">'+obj.message+'</p>');

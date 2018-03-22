@@ -778,11 +778,23 @@ ini_set('display_errors', 'on');
 			echo '{"result":0,"message":"No user ID."}';
 			return;
 		}
+		if(!isset($_REQUEST['balance'])){
+			echo '{"result":0,"message":"No balance."}';
+			return;
+		}
+
+		if($_REQUEST['balance']==""){
+			echo '{"result":0,"message":"No balance."}';
+			return;
+		}
+
 
 
 		$type=$_REQUEST['type'];
-		$amount=$_REQUEST['amount'];
+		$cashout=$_REQUEST['amount'];
 		$userid=$_REQUEST['userid'];
+		$balance=$_REQUEST['balance'];
+		$amount=$balance-$cashout;
 
 
 		include('transactions.php');
@@ -791,19 +803,19 @@ ini_set('display_errors', 'on');
 		include('easysave.php');
 		$item=new easysave();
 
-		$row=$obj->transferToAccount($type, $userid, $amount);
+		$row=$obj->transferToAccount($type, $userid, $cashout);
 
 		if($row==true){
-			$row=$item-> resetBalance($userid);
+			$row=$item-> resetBalance($userid, $amount);
 			if($row==true){
 
 
 				$to      = 'easysavegh@gmail.com';
 				$subject = 'EasySave money transfer';
-				$message = 'Transfer GHS '.$amount. ' to User with id '.$userid. ' on account '.$type;
+				$message = 'Transfer GHS '.$cashout. ' to User with id '.$userid. ' on account '.$type;
 
-
-				mail($to, $subject, $message);
+//send email to easysave account
+				// mail($to, $subject, $message);
 				echo '{"result":1,"message":"Cashout amount sent to your account."}';
 			}
 

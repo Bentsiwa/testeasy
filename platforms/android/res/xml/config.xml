@@ -16,6 +16,9 @@
         <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="PushPlugin">
+      <param name="android-package" value="com.plugin.gcm.PushPlugin" />
+    </feature>
     <name>EasySave</name>
     <description>
         An app that allows users to save money.
